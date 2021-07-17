@@ -1,4 +1,50 @@
+.section-header {
+  font-size: 16px;
+}
+
+.form-row {
+  height: 60px;
+  width: 480px;
+  display: flex;
+}
+
+.form-control {
+  flex: auto;
+}
+
+.error-section {
+  background-color: rgba(255, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.error-message {
+  color: #ff0000;
+  margin-left: auto;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.delete-button {
+  align-self: center;
+}
+
 #submit-btn {
   margin-top: 20px;
   width: 100%;
+  font-size: 16px;
+}
+
+.spinner-overlay {
+  background-color: rgba(0, 0, 0, 0.75);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

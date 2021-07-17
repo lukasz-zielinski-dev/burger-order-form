@@ -23,6 +23,10 @@
   align-items: center;
 }
 
+.form-header {
+  font-size: 32px;
+}
+
 #contribution {
   align-self: flex-end;
 }

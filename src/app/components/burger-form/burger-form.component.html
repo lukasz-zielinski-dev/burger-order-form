@@ -1,24 +1,92 @@
-<mat-list>
+<mat-list id="order-form" [formGroup]="orderForm">
   <!-- BUN -->
-  <div mat-subheader>Bun</div>
-  <div>[FORM CONTROLS GOES HERE!]</div>
+  <div mat-subheader><p class="section-header">Bun</p></div>
+  <div class="form-row">
+    <app-custom-select-control
+      class="form-control"
+      formControlName="bunType"
+      label="Select bun type"
+      [selectableOptions]="burgerFormConfiguration.bunOptions"
+    ></app-custom-select-control>
+  </div>
+
   <!-- BURGERS -->
-  <mat-divider></mat-divider>
-  <div mat-subheader>
-    Burgers
-    <button mat-icon-button color="primary">
-      <mat-icon>add</mat-icon>
+  <div [ngClass]="{ 'error-section': burgersArrayErrorMsg }" mat-subheader>
+    <p class="section-header">Burgers</p>
+    <button mat-icon-button color="primary" (click)="addBurger()">
+      <mat-icon>add_circle</mat-icon>
     </button>
+    <p class="error-message">{{ burgersArrayErrorMsg }}</p>
   </div>
-  <div>[FORM CONTROLS GOES HERE!]</div>
+  <div formArrayName="burgers">
+    <div *ngFor="let burger of burgerControls; let index = index">
+      <div class="form-row" [formGroupName]="index">
+        <app-custom-select-control
+          class="form-control"
+          formControlName="type"
+          label="Select burger type"
+          [selectableOptions]="burgerFormConfiguration.burgerTypeOptions"
+        ></app-custom-select-control>
+        <app-custom-select-control
+          class="form-control"
+          [ngClass]="{ hidden: burger.controls.degreeOfDoneness.disabled }"
+          formControlName="degreeOfDoneness"
+          label="Select degree of doneness"
+          [selectableOptions]="
+            burgerFormConfiguration.burgerDegreeOfDonenessOptions
+          "
+        ></app-custom-select-control>
+        <button
+          class="delete-button"
+          mat-icon-button
+          color="warn"
+          (click)="deleteBurger(index)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- TOPPINGS -->
-  <mat-divider></mat-divider>
-  <div mat-subheader>
-    Toppings
-    <button mat-icon-button color="primary">
-      <mat-icon>add</mat-icon>
+  <div [ngClass]="{ 'error-section': toppingsArrayErrorMsg }" mat-subheader>
+    <p class="section-header">Toppings</p>
+    <button mat-icon-button color="primary" (click)="addTopping()">
+      <mat-icon>add_circle</mat-icon>
     </button>
+    <p class="error-message">{{ toppingsArrayErrorMsg }}</p>
   </div>
-  <div>[FORM CONTROLS GOES HERE!]</div>
+  <div formArrayName="toppings">
+    <div *ngFor="let topping of toppingControls; let index = index">
+      <div class="form-row">
+        <!-- <input class="form-control" [formControlName]="index" /> -->
+        <app-custom-select-control
+          class="form-control"
+          [formControlName]="index"
+          label="Select topping"
+          [selectableOptions]="burgerFormConfiguration.toppingOptions"
+        ></app-custom-select-control>
+        <button
+          class="delete-button"
+          mat-icon-button
+          color="warn"
+          (click)="deleteTopping(index)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- SUBMIT -->
+  <button
+    id="submit-btn"
+    mat-raised-button
+    color="primary"
+    (click)="submitForm()"
+  >
+    Submit
+  </button>
+  <div *ngIf="isSendingForm" class="spinner-overlay">
+    <mat-spinner color="primary"></mat-spinner>
+  </div>
 </mat-list>
-<button id="submit-btn" mat-raised-button color="primary">Submit</button>
